@@ -1,7 +1,5 @@
 package qtrip.pages;
 
-import static qtrip.SeleniumWrapper.*;
-
 import java.time.Duration;
 
 import org.openqa.selenium.WebElement;
@@ -11,9 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import qtrip.SeleniumWrapper;
 
-public class AdventuresDetailPage {
+public class AdventuresDetailPage extends SeleniumWrapper {
 
     WebDriver driver;
     WebDriverWait wait;
@@ -51,7 +49,7 @@ public class AdventuresDetailPage {
                 url = driver.getCurrentUrl();
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -59,8 +57,7 @@ public class AdventuresDetailPage {
     public boolean sendKeyInNameField(String name) {
         try {
             wait.until(ExpectedConditions.visibilityOf(nameInputField)).clear();
-            sendKeys(nameInputField, name);
-            return true;
+            return sendKeys(nameInputField, name);
         } catch (Exception e) {
             return false;
         }
@@ -69,8 +66,7 @@ public class AdventuresDetailPage {
     public boolean sendKeyInDateField(String date) {
         try {
             wait.until(ExpectedConditions.visibilityOf(dateInputField)).clear();
-            sendKeys(dateInputField, date);
-            return true;
+            return sendKeys(dateInputField, date);
         } catch (Exception e) {
             return false;
         }
@@ -79,8 +75,7 @@ public class AdventuresDetailPage {
     public boolean sendKeyInPersonCountField(String personCount) {
         try {
             wait.until(ExpectedConditions.visibilityOf(personCountField)).clear();
-            sendKeys(personCountField, personCount);
-            return true;
+            return sendKeys(personCountField, personCount);
         } catch (Exception e) {
             return false;
         }
@@ -88,8 +83,7 @@ public class AdventuresDetailPage {
 
     public boolean clickReserveBtn() {
         try {
-            click(wait.until(ExpectedConditions.visibilityOf(reserveBtn)), driver);
-            return true;
+            return click(wait.until(ExpectedConditions.visibilityOf(reserveBtn)));
         } catch (Exception e) {
             return false;
         }
@@ -97,16 +91,11 @@ public class AdventuresDetailPage {
 
     public boolean performReservation(String name, String date, String personCount) {
         try {
-            Assert.assertTrue(sendKeyInNameField(name));
-            Assert.assertTrue(sendKeyInDateField(date));
-            Assert.assertTrue(sendKeyInPersonCountField(personCount));
-            Assert.assertTrue(clickReserveBtn());
-            return true;
+            return sendKeyInNameField(name) && sendKeyInDateField(date) && sendKeyInPersonCountField(personCount) && clickReserveBtn();
         } catch (Exception e) {
             return false;
         }
     }
-
 
     public boolean verifyReservationSuccess() {
         try {

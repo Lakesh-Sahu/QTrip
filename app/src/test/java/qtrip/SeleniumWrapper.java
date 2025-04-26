@@ -5,13 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 
 public class SeleniumWrapper {
-    public static boolean click(WebElement element, WebDriver driver) {
+    public static boolean click(WebElement element) {
         try {
-                element.click();
-                return true;
+            element.click();
+            return true;
         } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     public static boolean sendKeys(WebElement element, String keysToEnter) {
@@ -33,11 +33,11 @@ public class SeleniumWrapper {
         }
     }
 
-    public static WebElement findElementWithRetry(WebDriver driver, By elemnt, int times) {
+    public static WebElement findElementWithRetry(WebDriver driver, By element, int times) {
         for (int i = 1; i <= times; i++) {
             try {
-                return driver.findElement(elemnt);
-            } catch (Exception e) {
+                return driver.findElement(element);
+            } catch (Exception ignored) {
             }
         }
         return null;

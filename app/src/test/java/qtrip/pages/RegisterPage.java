@@ -1,7 +1,5 @@
 package qtrip.pages;
 
-import static qtrip.SeleniumWrapper.*;
-
 import java.time.Duration;
 
 import org.openqa.selenium.WebElement;
@@ -12,8 +10,9 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import qtrip.SeleniumWrapper;
 
-public class RegisterPage {
+public class RegisterPage extends SeleniumWrapper {
     WebDriver driver;
     WebDriverWait wait;
     String url;
@@ -41,25 +40,23 @@ public class RegisterPage {
         PageFactory.initElements(ajax, this);
     }
 
-    public void navigateToRegisterPage() {
-        navigate(driver, "https://qtripdynamic-qa-frontend.vercel.app/pages/register/");
+    public boolean navigateToRegisterPage() {
+        return navigate(driver, "https://qtripdynamic-qa-frontend.vercel.app/pages/register/");
     }
 
     public boolean verifyOnRegistrationPage() {
         try {
             wait.until(ExpectedConditions.visibilityOf(registerNowBtn));
-            Assert.assertEquals(url, driver.getCurrentUrl(), "Not on registration page");
-            return true;
-        } catch (AssertionError | Exception e) {
+            return url.equals(driver.getCurrentUrl());
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean enterEmail(String email) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(emailInput)).clear();;
-            sendKeys(emailInput, email);
-            return true;
+            wait.until(ExpectedConditions.visibilityOf(emailInput)).clear();
+            return sendKeys(emailInput, email);
         } catch (Exception e) {
             return false;
         }
@@ -68,8 +65,7 @@ public class RegisterPage {
     public boolean enterPassword(String password) {
         try {
             passwordInput.clear();
-            sendKeys(passwordInput, password);
-            return true;
+            return sendKeys(passwordInput, password);
         } catch (Exception e) {
             return false;
         }
@@ -78,8 +74,7 @@ public class RegisterPage {
     public boolean enterConfirmPassword(String password) {
         try {
             confirmPassword.clear();
-            sendKeys(confirmPassword, password);
-            return true;
+            return sendKeys(confirmPassword, password);
         } catch (Exception e) {
             return false;
         }
@@ -87,15 +82,13 @@ public class RegisterPage {
 
     public boolean clickRegisterNowBtn() {
         try {
-            click(registerNowBtn, driver);
-            return true;
+            return click(registerNowBtn);
         } catch (Exception e) {
             return false;
         }
     }
 
-    public String registerNewUser(String userName, String password, String confirmPassword,
-            Boolean generateRandomuserName) {
+    public String registerNewUser(String userName, String password, String confirmPassword, Boolean generateRandomuserName) {
         try {
             if (generateRandomuserName) {
                 userName = System.currentTimeMillis() + userName;

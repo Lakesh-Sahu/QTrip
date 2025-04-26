@@ -1,10 +1,9 @@
 package qtrip.pages;
 
-import static qtrip.SeleniumWrapper.*;
+import qtrip.SeleniumWrapper;
 import qtrip.utils.NavigationBar;
 
 import java.time.Duration;
-import java.util.Iterator;
 import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +13,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePage {
+public class HomePage extends SeleniumWrapper {
     WebDriver driver;
     WebDriverWait wait;
     String url = "https://qtripdynamic-qa-frontend.vercel.app/";
@@ -57,7 +56,7 @@ public class HomePage {
                 wait.until(ExpectedConditions.visibilityOf(firstPageCards));
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -68,8 +67,8 @@ public class HomePage {
             wait.until(ExpectedConditions.visibilityOf(nb.logoutBtn));
             return true;
         } catch (Exception e) {
-        }
         return false;
+        }
     }
 
     public boolean sendKeysInSearchBar(String keyword) {
@@ -85,8 +84,8 @@ public class HomePage {
             }
             return true;
         } catch (Exception e) {
-        }
         return false;
+        }
     }
 
     public boolean isNoCityFound() {
@@ -96,35 +95,31 @@ public class HomePage {
         } catch (Exception e) {
             return false;
         }
-
     }
 
     public boolean isCityFound(String cityName) {
         try {
             wait.until(ExpectedConditions.visibilityOfAllElements(cityFound));
-            Iterator<WebElement> it = cityFound.iterator();
-            while (it.hasNext()) {
-                if (it.next().getText().toLowerCase().contains(cityName.toLowerCase())) {
+            for (WebElement webElement : cityFound) {
+                if (webElement.getText().toLowerCase().contains(cityName.toLowerCase())) {
                     return true;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
 
     public String clickOnCity(String cityName) {
         try {
-            Iterator<WebElement> it = cityFound.iterator();
-            while (it.hasNext()) {
-                WebElement element = it.next();
+            for (WebElement element : cityFound) {
                 String elementText = element.getText();
                 if (elementText.toLowerCase().contains(cityName.toLowerCase())) {
-                    click(element, driver);
+                    click(element);
                     return elementText;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return null;
     }

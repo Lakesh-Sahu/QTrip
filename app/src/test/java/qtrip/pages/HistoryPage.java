@@ -1,7 +1,5 @@
 package qtrip.pages;
 
-import static qtrip.SeleniumWrapper.*;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +12,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import qtrip.SeleniumWrapper;
 
-public class HistoryPage {
+public class HistoryPage extends SeleniumWrapper {
     WebDriver driver;
     WebDriverWait wait;
     String url =
@@ -48,12 +47,10 @@ public class HistoryPage {
     public boolean verifyOnReservationPage() {
         try {
             wait.until(ExpectedConditions.visibilityOf(reservationLogo));
-            if (driver.getCurrentUrl().contains("/pages/adventures/reservations/")) {
-                return true;
-            }
+            return driver.getCurrentUrl().contains("/pages/adventures/reservations/");
         } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     public boolean verifyReservationPresent() {
@@ -110,7 +107,7 @@ public class HistoryPage {
                         break;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return headerList;
     }
@@ -145,6 +142,7 @@ public class HistoryPage {
                 }
             }
         } catch (Exception e) {
+            return false;
         }
         return false;
     }
@@ -174,7 +172,7 @@ public class HistoryPage {
                     return getTransactionIdElement(rowNum, transactionIdColn).getText();
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -195,7 +193,7 @@ public class HistoryPage {
                     return true;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -218,7 +216,7 @@ public class HistoryPage {
                     return clickCancelReservationBtn(rowNum, cancelBtnColn);
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -248,7 +246,7 @@ public class HistoryPage {
                     return clickCancelReservationBtn(rowNum, cancelBtnColn);
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -257,8 +255,8 @@ public class HistoryPage {
         try {
             return wait.until(ExpectedConditions.visibilityOfAllElements(reservationList));
         } catch (Exception e) {
-        }
         return new ArrayList<>();
+        }
     }
 
     public WebElement getTransactionIdElement(int rowNumber, int transactionIdColn) {
@@ -267,8 +265,8 @@ public class HistoryPage {
                     .visibilityOfElementLocated(By.xpath("//tbody[@id= 'reservation-table']/tr["
                             + rowNumber + "]/*[" + transactionIdColn + "]")));
         } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     public WebElement getNameElement(int rowNumber, int nameColn) {
@@ -277,8 +275,8 @@ public class HistoryPage {
                     .visibilityOfElementLocated(By.xpath("//tbody[@id= 'reservation-table']/tr["
                             + rowNumber + "]/*[" + nameColn + "]")));
         } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     public WebElement getAdventureElement(int rowNumber, int adventureColn) {
@@ -287,8 +285,8 @@ public class HistoryPage {
                     .visibilityOfElementLocated(By.xpath("//tbody[@id= 'reservation-table']/tr["
                             + rowNumber + "]/*[" + adventureColn + "]")));
         } catch (Exception e) {
-        }
         return null;
+        }
     }
 
     public WebElement getPersonCountElement(int rowNumber, int personCountColn) {
@@ -297,8 +295,8 @@ public class HistoryPage {
                     .visibilityOfElementLocated(By.xpath("//tbody[@id= 'reservation-table']/tr["
                             + rowNumber + "]/*[" + personCountColn + "]")));
         } catch (Exception e) {
-        }
         return null;
+        }
     }
 
     public WebElement getDateElement(int rowNumber, int dateColn) {
@@ -307,20 +305,20 @@ public class HistoryPage {
                     .visibilityOfElementLocated(By.xpath("//tbody[@id= 'reservation-table']/tr["
                             + rowNumber + "]/*[" + dateColn + "]")));
         } catch (Exception e) {
-        }
         return null;
+        }
     }
 
     public boolean clickCancelReservationBtn(int rowNumber, int cancelBtnColn) {
         try {
             click(wait.until(ExpectedConditions
                     .visibilityOfElementLocated(By.xpath("//tbody[@id='reservation-table']/tr["
-                            + rowNumber + "]/*[" + cancelBtnColn + "]//button[text()='Cancel']"))), driver);
+                            + rowNumber + "]/*[" + cancelBtnColn + "]//button[text()='Cancel']"))));
             Thread.sleep(8000);
             return true;
         } catch (Exception e) {
-        }
         return false;
+        }
     }
 
     public boolean containsMatching(String s1, String s2) {

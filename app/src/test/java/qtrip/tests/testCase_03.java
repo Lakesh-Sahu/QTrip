@@ -30,7 +30,7 @@ public class testCase_03 extends BaseTest {
                 sa.assertTrue(hp.verifyOnHomePage(), "Not on homepage");
 
                 NavigationBar nb = new NavigationBar(driver);
-                sa.assertTrue(nb.clickregisterBtn(),
+                sa.assertTrue(nb.clickRegisterBtn(),
                                 "Unable to click registration button of navigation bar");
 
                 RegisterPage rp = new RegisterPage(driver);
@@ -94,7 +94,7 @@ public class testCase_03 extends BaseTest {
 
                 sa.assertTrue(nb.clickLogoutBtn(), "Unable to click logout button");
 
-                sa.assertTrue(nb.verifyUserLoggedOut(), "User not logged out");;
+                sa.assertTrue(nb.verifyUserLoggedOut(), "User not logged out");
 
                 System.out.println("END TestCase03");
 

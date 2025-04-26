@@ -1,11 +1,9 @@
 package qtrip.pages;
 
-import static qtrip.SeleniumWrapper.*;
-
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -14,8 +12,9 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import qtrip.SeleniumWrapper;
 
-public class AdventurePage {
+public class AdventurePage extends SeleniumWrapper {
 
     WebDriver driver;
     WebDriverWait wait;
@@ -52,13 +51,13 @@ public class AdventurePage {
     List<WebElement> categoryBanner;
 
     @FindBy(xpath = "//div/div[1]/h5[@class='text-left']")
-    List<WebElement> adventureName; 
+    List<WebElement> adventureName;
 
     public AdventurePage(WebDriver driver, String cityName) {
         this.driver = driver;
         wait = new WebDriverWait(this.driver, Duration.ofSeconds(10));
         url = "https://qtripdynamic-qa-frontend.vercel.app/pages/adventures/?city="
-                + cityName.toLowerCase() + "/";
+                + cityName.toLowerCase();
 
         AjaxElementLocatorFactory ajax = new AjaxElementLocatorFactory(this.driver, 10);
         PageFactory.initElements(ajax, this);
@@ -66,8 +65,7 @@ public class AdventurePage {
 
     public boolean verifyOnAdvanturePage() {
         try {
-            driver.getCurrentUrl().equals(url);
-            return true;
+            return driver.getCurrentUrl().equals(url);
         } catch (Exception e) {
             return false;
         }
@@ -76,12 +74,10 @@ public class AdventurePage {
     public boolean cardSize(int expectedCardItems) {
         try {
             Thread.sleep(2000);
-            if (cards.size() == expectedCardItems) {
-                return true;
-            }
+            return cards.size() == expectedCardItems;
         } catch (Exception e) {
-        }
         return false;
+        }
     }
 
     public boolean selectDurationByVisibleText(String durationText) {
@@ -96,7 +92,7 @@ public class AdventurePage {
     }
 
     public boolean selectDurationByIndex(int index) {
-        // Availabe index 1,2,3,4
+        // Available index 1,2,3,4
         try {
             Select select = new Select(durationFilter);
             select.selectByIndex(index);
@@ -123,32 +119,28 @@ public class AdventurePage {
             Thread.sleep(1000);
             List<WebElement> cd = cardsDuration;
 
-            Iterator<WebElement> it = cd.iterator();
-            
-            while (it.hasNext()) {
+            for (WebElement webElement : cd) {
                 StringBuilder sb = new StringBuilder();
-                String elementText = it.next().getText();
+                String elementText = webElement.getText();
 
                 for (Character ch : elementText.toCharArray()) {
                     if (Character.isDigit(ch)) {
                         sb.append(ch);
                     }
                 }
-                if (Integer.valueOf(sb.toString()) < start || Integer.valueOf(sb.toString()) > end) {
+                if (Integer.parseInt(sb.toString()) < start || Integer.parseInt(sb.toString()) > end) {
                     return false;
                 }
             }
 
-        } catch (Exception e) {
-            return false;
+        } catch (Exception ignored) {
         }
         return true;
     }
 
     public boolean clickDurationClearBtn() {
         try {
-            click(wait.until(ExpectedConditions.visibilityOf(clearDurationBtn)), driver);
-            return true;
+            return click(wait.until(ExpectedConditions.visibilityOf(clearDurationBtn)));
         } catch (Exception e) {
             return false;
         }
@@ -187,20 +179,20 @@ public class AdventurePage {
     public boolean verifyCategory(String category) {
         try {
             Thread.sleep(1000);
-            for(WebElement element : wait.until(ExpectedConditions.visibilityOfAllElements(categoryBanner))) {
-                if(!category.toLowerCase().contains(element.getText().toLowerCase())) {
+            for (WebElement element : wait.until(ExpectedConditions.visibilityOfAllElements(categoryBanner))) {
+                if (!category.toLowerCase().contains(element.getText().toLowerCase())) {
                     return false;
                 }
             }
         } catch (Exception e) {
+            return false;
         }
         return true;
     }
 
     public boolean clickCategoryClearBtn() {
         try {
-            click(wait.until(ExpectedConditions.visibilityOf(clearCategoryBtn)), driver);
-            return true;
+            return click(wait.until(ExpectedConditions.visibilityOf(clearCategoryBtn)));
         } catch (Exception e) {
             return false;
         }
@@ -209,8 +201,7 @@ public class AdventurePage {
     public boolean sendKeysInSearchAdventure(String adventure) {
         try {
             wait.until(ExpectedConditions.visibilityOf(searchAdventure)).clear();
-            sendKeys(searchAdventure, adventure);
-            return true;
+            return sendKeys(searchAdventure, adventure);
         } catch (Exception e) {
             return false;
         }
@@ -223,19 +214,19 @@ public class AdventurePage {
             for (WebElement webElement : adventureName) {
                 names.add(webElement.getText());
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return names;
     }
 
     public boolean matchAdventureNameInCard(String adventureName) {
         try {
-            for(String name : getAdventuresName()) {
-                if(name.toLowerCase().contains(adventureName.toLowerCase())) {
+            for (String name : getAdventuresName()) {
+                if (name.toLowerCase().contains(adventureName.toLowerCase())) {
                     return true;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -244,12 +235,11 @@ public class AdventurePage {
         try {
             Thread.sleep(3000);
             for (WebElement webElement : adventureName) {
-                if(webElement.getText().toLowerCase().contains(adventureNameToClick.toLowerCase())) {
-                    click(webElement, driver);
-                    return true;
+                if (webElement.getText().toLowerCase().contains(adventureNameToClick.toLowerCase())) {
+                    return click(webElement);
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }

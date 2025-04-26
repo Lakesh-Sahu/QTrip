@@ -10,25 +10,26 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-  
-public class NavigationBar { 
-    WebDriver driver; 
+import qtrip.SeleniumWrapper;
+
+public class NavigationBar extends SeleniumWrapper {
+    WebDriver driver;
     WebDriverWait wait;
-     
-    @FindBy(linkText = "Home")  
-    WebElement homeBtn; 
+
+    @FindBy(linkText = "Home")
+    WebElement homeBtn;
 
     @FindBy(linkText = "Reservations")
-    WebElement reservationBtn; 
+    WebElement reservationBtn;
 
-    @FindBy(xpath = "//div[text()='Logout']") 
+    @FindBy(xpath = "//div[text()='Logout']")
     public WebElement logoutBtn;
 
     @FindBy(linkText = "Login Here")
     WebElement loginBtn;
 
     @FindBy(linkText = "Register")
-    public WebElement registerBtn; 
+    public WebElement registerBtn;
 
     @FindBy(linkText = "QTrip")
     WebElement qTripBtn;
@@ -42,36 +43,32 @@ public class NavigationBar {
 
     public boolean clickHomeBtn() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(homeBtn)).click();
-            return true;
-        } catch(Exception e) {
+            return click(wait.until(ExpectedConditions.visibilityOf(homeBtn)));
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean clickReservationBtn() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(reservationBtn)).click();
-            return true;
-        } catch(Exception e) {
+            return click(wait.until(ExpectedConditions.visibilityOf(reservationBtn)));
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean clickLoginBtn() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(loginBtn)).click();
-            return true;
-        } catch(Exception e) {
+            return click(wait.until(ExpectedConditions.visibilityOf(loginBtn)));
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean clickLogoutBtn() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(logoutBtn)).click();
-            return true;
-        } catch(Exception e) {
+            return click(wait.until(ExpectedConditions.visibilityOf(logoutBtn)));
+        } catch (Exception e) {
             return false;
         }
     }
@@ -81,7 +78,7 @@ public class NavigationBar {
             wait.until(ExpectedConditions.visibilityOf(registerBtn));
             wait.until(ExpectedConditions.visibilityOf(loginBtn));
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -90,20 +87,18 @@ public class NavigationBar {
         return wait.until(ExpectedConditions.visibilityOf(registerBtn));
     }
 
-    public boolean clickregisterBtn() {
+    public boolean clickRegisterBtn() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(registerBtn)).click();
-            return true;
-        } catch(Exception e) {
+            return click(wait.until(ExpectedConditions.visibilityOf(registerBtn)));
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean clickqTripBtn() {
+    public boolean clickQTripBtn() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(qTripBtn)).click();
-            return true;
-        } catch(Exception e) {
+            return click(wait.until(ExpectedConditions.visibilityOf(qTripBtn)));
+        } catch (Exception e) {
             return false;
         }
     }

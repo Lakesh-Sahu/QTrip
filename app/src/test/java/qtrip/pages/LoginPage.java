@@ -1,7 +1,5 @@
 package qtrip.pages;
 
-import static qtrip.SeleniumWrapper.*;
-
 import java.time.Duration;
 
 import org.openqa.selenium.WebElement;
@@ -11,9 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import qtrip.SeleniumWrapper;
 
-public class LoginPage {
+public class LoginPage extends SeleniumWrapper {
     WebDriver driver;
     WebDriverWait wait;
     String url;
@@ -47,17 +45,15 @@ public class LoginPage {
         try {
             wait.until(ExpectedConditions.visibilityOf(loginBtn));
             wait.until(ExpectedConditions.visibilityOf(registerNowBtn));
-            Assert.assertTrue(url.contains(driver.getCurrentUrl()), "Not on login page");
-            return true;
-        } catch (AssertionError | Exception e) {
+            return url.contains(driver.getCurrentUrl());
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean enterEmail(String email) {
         try {
-            sendKeys(emailInput, email);
-            return true;
+            return sendKeys(emailInput, email);
         } catch (Exception e) {
             return false;
         }
@@ -65,8 +61,7 @@ public class LoginPage {
 
     public boolean enterPassword(String password) {
         try {
-            sendKeys(passwordInput, password);
-            return true;
+            return sendKeys(passwordInput, password);
         } catch (Exception e) {
             return false;
         }
@@ -74,8 +69,7 @@ public class LoginPage {
 
     public boolean clickLoginBtn() {
         try {
-            click(loginBtn, driver);
-            return true;
+            return click(loginBtn);
         } catch (Exception e) {
             return false;
         }
@@ -83,10 +77,7 @@ public class LoginPage {
 
     public boolean performLogin(String username, String password) {
         try {
-            enterEmail(username);
-            enterPassword(password);
-            clickLoginBtn();
-            return true;
+            return enterEmail(username) && enterPassword(password) && clickLoginBtn();
         } catch (Exception e) {
             return false;
         }

@@ -32,7 +32,7 @@ public class testCase_04 extends BaseTest {
 
         NavigationBar nb = new NavigationBar(driver);
 
-        sa.assertTrue(nb.clickregisterBtn(), "Unable to click register button");
+        sa.assertTrue(nb.clickRegisterBtn(), "Unable to click register button");
 
         RegisterPage rp = new RegisterPage(driver);
 
@@ -55,14 +55,14 @@ public class testCase_04 extends BaseTest {
         dataSets.add(dataset2);
         dataSets.add(dataset3);
 
-        for (int i = 0; i < dataSets.size(); i++) {
-            String[] splittedDataset = dataSets.get(i).split(";");
+        for (String dataSet : dataSets) {
+            String[] splitDataset = dataSet.split(";");
 
-            String city = splittedDataset[0];
-            String adventure = splittedDataset[1];
-            String name = splittedDataset[2];
-            String date = splittedDataset[3];
-            String personCount = splittedDataset[4];
+            String city = splitDataset[0];
+            String adventure = splitDataset[1];
+            String name = splitDataset[2];
+            String date = splitDataset[3];
+            String personCount = splitDataset[4];
 
             booking(driver, sa, city, adventure, name, date, personCount);
         }
@@ -73,13 +73,13 @@ public class testCase_04 extends BaseTest {
 
         sa.assertTrue(hsp.verifyOnReservationPage(), "Not on reservation page");
 
-        for (int i = 0; i < dataSets.size(); i++) {
-            String[] splittedDataset = dataSets.get(i).split(";");
+        for (String dataSet : dataSets) {
+            String[] splitDataset = dataSet.split(";");
 
-            String adventure = splittedDataset[1];
-            String name = splittedDataset[2];
-            String date = splittedDataset[3];
-            String personCount = splittedDataset[4];
+            String adventure = splitDataset[1];
+            String name = splitDataset[2];
+            String date = splitDataset[3];
+            String personCount = splitDataset[4];
 
             sa.assertTrue(hsp.verifyMatchingReservationPresent(name, adventure, personCount, date),
                     "Matching reservation not found");
@@ -87,7 +87,7 @@ public class testCase_04 extends BaseTest {
 
         sa.assertTrue(nb.clickLogoutBtn(), "Unable to click logout button");
 
-        sa.assertTrue(nb.verifyUserLoggedOut(), "User not logged out");;
+        sa.assertTrue(nb.verifyUserLoggedOut(), "User not logged out");
 
         System.out.println("END TestCase04");
 
@@ -123,7 +123,7 @@ public class testCase_04 extends BaseTest {
                     "Unable to perform reservation");
 
             sa.assertTrue(adp.verifyReservationSuccess(), "Reservation not successful");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 }

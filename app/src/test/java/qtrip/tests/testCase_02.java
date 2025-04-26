@@ -14,8 +14,8 @@ public class testCase_02 extends BaseTest {
     public void TestCase02(String validCityName, String category, String duration, String expectedFilterResult, String expectedWithoutFilterResult) {
         System.out.println("Verify that Search and filter works fine");
         String invalidCityName = "notpresent";
-        int expectedCardSizeWithFilter = Integer.valueOf(expectedFilterResult);
-        int expectedCardSizeWithoutFilter = Integer.valueOf(expectedWithoutFilterResult);
+        int expectedCardSizeWithFilter = Integer.parseInt(expectedFilterResult);
+        int expectedCardSizeWithoutFilter = Integer.parseInt(expectedWithoutFilterResult);
 
         SoftAssert sa = new SoftAssert();
 

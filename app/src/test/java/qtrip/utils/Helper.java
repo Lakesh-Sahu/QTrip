@@ -19,9 +19,9 @@ public class Helper {
                 }
             }
             if(i == 1) {
-                arr[0] = Integer.valueOf(sb.toString());
+                arr[0] = Integer.parseInt(sb.toString());
             } else {
-                arr[1] = Integer.valueOf(sb.toString());
+                arr[1] = Integer.parseInt(sb.toString());
             }
         }
 

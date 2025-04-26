@@ -17,7 +17,7 @@ public class testCase_01 extends BaseTest{
     public void TestCase01(String userName, String password){
         
         System.out.println("Verify user registration-login-logout");
-        Boolean status;
+        boolean status;
 
         SoftAssert sa = new SoftAssert();
 
@@ -25,7 +25,7 @@ public class testCase_01 extends BaseTest{
         sa.assertTrue(hp.navigateToHomePage(), "Unable to navigate to home page");
 
         NavigationBar nb = new NavigationBar(driver);
-        status = nb.clickregisterBtn();
+        status = nb.clickRegisterBtn();
 
         sa.assertTrue(status, "Click on registration button Failed");
 
@@ -45,7 +45,7 @@ public class testCase_01 extends BaseTest{
 
         sa.assertTrue(nb.clickLogoutBtn(), "Logout button click Failed");
 
-        sa.assertTrue(nb.verifyUserLoggedOut(), "User not logged out");;
+        sa.assertTrue(nb.verifyUserLoggedOut(), "User not logged out");
 
         System.out.println("END TestCase01");
 
